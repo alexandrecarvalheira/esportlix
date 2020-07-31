@@ -3,31 +3,23 @@ import PageDefault from "../../../components/PageDefault";
 import { Link } from "react-router-dom";
 import FormField from "../../../components/FormField";
 import Button from '../../../components/Button'
+import useForm from "../../../hooks/useForm";
+
 
 function CadastroCategoria() {
   const valoresIniciais = {
-    nome: "",
+    titulo: "",
     descricao: "",
     cor: "",
   };
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
 
-  function setValue(key, e) {
-    setValues({
-      ...values,
-      [key]: e,
-    });
-  }
-
-  function handleChange(e) {
-    setValue(e.target.getAttribute("name"), e.target.value);
-  }
+  const { handleChange, values, clearForm }= useForm(valoresIniciais);
 
   function handleSubmit(e) {
     e.preventDefault();
     setCategorias([...categorias, values]);
-    setValues(valoresIniciais);
+    clearForm();
   }
 
   useEffect(()=>{
@@ -44,10 +36,10 @@ function CadastroCategoria() {
 
   return (
     <PageDefault>
-      <h1>Cadastro de categoria: {values.nome}</h1>
+      <h1>Cadastro de categoria: {values.titulo}</h1>
 
       <form onSubmit={handleSubmit}>
-        <FormField label="Nome da Categoria" type="text" name="nome" value={values.nome} onChange={handleChange}/>
+        <FormField label="Nome da Categoria" type="text" name="titulo" value={values.titulo} onChange={handleChange}/>
         <FormField label="Descrição" type="textarea" name="descricao" value={values.descricao} onChange={handleChange}/>
         <FormField label="cor" type="color" name="cor" value={values.cor} onChange={handleChange}/>
         
@@ -61,8 +53,8 @@ function CadastroCategoria() {
         )}
       </form>
       <ul>
-        {categorias.map((categoria, index) => {
-          return <li key={`${categoria}${index}`}>{categoria.nome}</li>;
+        {categorias.map((categoria) => {
+          return <li key={`${categoria.titulo}`}>{categoria.titulo}</li>;
         })}
       </ul>
       <Link to="/"> Ir para Home</Link>
