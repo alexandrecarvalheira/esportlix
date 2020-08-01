@@ -15,6 +15,21 @@ function getAllWithVideos(){
         throw new Error('erro em dados')
     })
 }
+
+function getAll(){
+    return fetch(`${URL_CATEGORIES}`)
+    .then(async (respostaSv) =>{
+
+        if (respostaSv.ok){
+
+            const resposta = await respostaSv.json();
+            return resposta
+        }
+
+        throw new Error('erro em dados')
+    })
+}
 export default{
-    getAllWithVideos
+    getAllWithVideos,
+    getAll
 }

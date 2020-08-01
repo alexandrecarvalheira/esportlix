@@ -10,7 +10,6 @@ function Home() {
  useEffect(()=>{
    categoriasRepository.getAllWithVideos()
    .then((categoriasComVideos) =>{
-     console.log(categoriasComVideos);
      setDadosInicias(categoriasComVideos)
    }).catch((err)=>{
      console.log(err.message)
